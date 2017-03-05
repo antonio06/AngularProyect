@@ -28,8 +28,8 @@ angular.module('notesApp', [])
 
 		// Función para el submit del formulario
 		self.insert = function () {
-		    var arrayErrors = validateForm(self.person);
-		    if (arrayErrors.length) {
+		    self.arrayErrors = validateForm(self.person);
+		    if (self.arrayErrors.length) {
 			self.person = angular.copy(personModel);
 		    } else {
 			// Añadir nueva id y la incrementamos
@@ -94,23 +94,23 @@ angular.module('notesApp', [])
 		};
 
 		function validateForm(person) {
-		    self.arrayErrors = [];
+		    var arrayErrors = [];
 		    if (self.person.name === null) {
-			self.arrayErrors.push('The field name is required');
+			arrayErrors.push('The field name is required');
 		    }
 
 		    if (self.person.surname === null) {
-			self.arrayErrors.push('The field surname is required');
+			arrayErrors.push('The field surname is required');
 		    }
 
 		    if (self.person.age <= 18) {
-			self.arrayErrors.push('The field age must be more tham 18 years');
+			arrayErrors.push('The field age must be more tham 18 years');
 		    }
 
 		    if (!parseInt(self.person.age)) {
-			self.arrayErrors.push('The field age must be a number not a string');
+			arrayErrors.push('The field age must be a number not a string');
 		    }
-		    return self.arrayErrors;
+		    return arrayErrors;
 		}
 		;
 	    }]);
