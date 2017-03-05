@@ -40,7 +40,7 @@ angular.module('notesApp', [])
 		    if (self.person.age <= 18) {
 			arrayErrors.push('The field age must be more tham 18 years');
 		    }
-		    
+
 		    if (!parseInt(self.person.age)) {
 			arrayErrors.push('The field age must be a number not a string');
 		    }
@@ -51,7 +51,7 @@ angular.module('notesApp', [])
 			$('.divAlert').show();
 			$('.divAlert').animate({
 			    opacity: 0.25
-			}, 5000, function() {
+			}, 5000, function () {
 			    $('.divAlert').hide();
 			});
 			self.person = angular.copy(personModel);
