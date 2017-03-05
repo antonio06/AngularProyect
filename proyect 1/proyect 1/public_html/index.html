@@ -50,7 +50,7 @@ Frist proyect with html and framework Angularjs and bootstrap.
                     </table>
                 </div>
             </div>
-            <div class="alert alert-danger divAlert" role="alert" ng-show="ctrl.arrayErrors.length">
+            <div class="alert alert-danger divAlert" role="alert" ng-show="ctrl.arrayErrors.length" ng-cloak>
                 <ul class="listErrors">
                     <li ng-repeat="error in ctrl.arrayErrors track by $index">{{error}}</li>
                 </ul>

@@ -112,5 +112,4 @@ angular.module('notesApp', [])
 		    }
 		    return arrayErrors;
 		}
-		;
 	    }]);
