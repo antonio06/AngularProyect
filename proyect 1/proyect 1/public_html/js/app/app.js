@@ -30,7 +30,6 @@ angular.module('notesApp', [])
 		self.insert = function () {
 		    var arrayErrors = validateForm(self.person);
 		    if (arrayErrors.length) {
-			self.arrayErrors;
 			self.person = angular.copy(personModel);
 		    } else {
 			// Añadir nueva id y la incrementamos
