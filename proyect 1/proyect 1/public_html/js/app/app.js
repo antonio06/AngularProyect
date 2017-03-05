@@ -1,10 +1,9 @@
 angular.module('notesApp', [])
 	// Un controlador se encarga de la lógica de una parte de la aplicación.
 	.controller('MainCtrl', [function () {
-		var arrayErrors = [];
 		var self = this;
 		var id = 3;
-		$('.divAlert').hide();
+		self.arrayErrors = [];
 		// Plantilla de datos de persona
 		var personModel = {
 		    id: null,
@@ -29,12 +28,9 @@ angular.module('notesApp', [])
 
 		// Función para el submit del formulario
 		self.insert = function () {
-		    arrayErrors = validateForm(self.person);
+		    var arrayErrors = validateForm(self.person);
 		    if (arrayErrors.length) {
-			for (var b = 0; b < arrayErrors.length; b++) {
-			    $('.listErrors').append('<li>' + arrayErrors[b] + '</li>');
-			}
-			$('.divAlert').show();
+			self.arrayErrors;
 			self.person = angular.copy(personModel);
 		    } else {
 			// Añadir nueva id y la incrementamos
@@ -100,21 +96,21 @@ angular.module('notesApp', [])
 
 		function validateForm(person) {
 		    if (self.person.name === null) {
-			arrayErrors.push('The field name is required');
+			self.arrayErrors.push('The field name is required');
 		    }
 
 		    if (self.person.surname === null) {
-			arrayErrors.push('The field surname is required');
+			self.arrayErrors.push('The field surname is required');
 		    }
 
 		    if (self.person.age <= 18) {
-			arrayErrors.push('The field age must be more tham 18 years');
+			self.arrayErrors.push('The field age must be more tham 18 years');
 		    }
 
 		    if (!parseInt(self.person.age)) {
-			arrayErrors.push('The field age must be a number not a string');
+			self.arrayErrors.push('The field age must be a number not a string');
 		    }
-		    return arrayErrors;
+		    return self.arrayErrors;
 		}
 		;
 	    }]);

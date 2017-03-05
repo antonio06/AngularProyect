@@ -50,8 +50,10 @@ Frist proyect with html and framework Angularjs and bootstrap.
                     </table>
                 </div>
             </div>
-            <div class="alert alert-danger divAlert" role="alert">
-                <ul class="listErrors"></ul>
+            <div class="alert alert-danger divAlert" role="alert" ng-show="ctrl.arrayErrors.length">
+                <ul class="listErrors">
+                    <li ng-repeat="error in ctrl.arrayErrors">{{error}}</li>
+                </ul>
             </div>
             <div id="modal" class="modal fade" tabindex="-1" role="dialog">
                 <div class="modal-dialog" role="document">
