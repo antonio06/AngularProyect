@@ -94,6 +94,7 @@ angular.module('notesApp', [])
 		};
 
 		function validateForm(person) {
+		    self.arrayErrors = [];
 		    if (self.person.name === null) {
 			self.arrayErrors.push('The field name is required');
 		    }
