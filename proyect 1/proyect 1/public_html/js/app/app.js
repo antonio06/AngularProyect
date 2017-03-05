@@ -1,6 +1,7 @@
 angular.module('notesApp', [])
 	// Un controlador se encarga de la lógica de una parte de la aplicación.
 	.controller('MainCtrl', [function () {
+		var arrayErrors = [];
 		var self = this;
 		var id = 3;
 		$('.divAlert').hide();
@@ -28,8 +29,6 @@ angular.module('notesApp', [])
 
 		// Función para el submit del formulario
 		self.insert = function () {
-		    var arrayErrors = [];
-		    console.log(self.person.name);
 		    if (self.person.name === null) {
 			arrayErrors.push('The field name is required');
 		    }
@@ -41,11 +40,21 @@ angular.module('notesApp', [])
 		    if (self.person.age <= 18) {
 			arrayErrors.push('The field age must be more tham 18 years');
 		    }
+		    
+		    if (!parseInt(self.person.age)) {
+			arrayErrors.push('The field age must be a number not a string');
+		    }
 		    if (arrayErrors.length) {
 			for (var b = 0; b < arrayErrors.length; b++) {
 			    $('.listErrors').append('<li>' + arrayErrors[b] + '</li>');
 			}
 			$('.divAlert').show();
+			$('.divAlert').animate({
+			    opacity: 0.25
+			}, 5000, function() {
+			    $('.divAlert').hide();
+			});
+			self.person = angular.copy(personModel);
 		    } else {
 			// Añadir nueva id y la incrementamos
 			self.person.id = id++;
