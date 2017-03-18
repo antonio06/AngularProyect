@@ -20,14 +20,29 @@ Frist proyect with html and framework Angularjs and bootstrap.
                         <div class="form-group">
                             <label for="exampleInputName2">Name</label>
                             <input type="text" name="name" class="form-control" placeholder="John" ng-model="ctrl.person.name">
+                            <div class="alert alert-danger divAlert" role="alert" ng-show="ctrl.requestName === true">
+                                <ul>
+                                    <li>The field name is required</li>
+                                </ul>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail2">Surname</label>
                             <input type="text" name="surname" class="form-control" placeholder="Doe" ng-model="ctrl.person.surname">
+                            <div class="alert alert-danger divAlert" role="alert" ng-show="ctrl.requestSurname === true">
+                                <ul>
+                                    <li>The field surname is required</li>
+                                </ul>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail2">Age</label>
                             <input type="text" name="age" class="form-control" placeholder="23" ng-model="ctrl.person.age">
+                            <div class="alert alert-danger divAlert" role="alert" ng-show="ctrl.arrayErrors.length" ng-cloak>
+                                <ul class="listErrors">
+                                    <li ng-repeat="error in ctrl.arrayErrors track by $index">{{error}}</li>
+                                </ul>
+                            </div>
                         </div>
                         <button type="submit" class="btn btn-primary">Insert</button>
                     </form>
@@ -50,11 +65,11 @@ Frist proyect with html and framework Angularjs and bootstrap.
                     </table>
                 </div>
             </div>
-            <div class="alert alert-danger divAlert" role="alert" ng-show="ctrl.arrayErrors.length" ng-cloak>
-                <ul class="listErrors">
-                    <li ng-repeat="error in ctrl.arrayErrors track by $index">{{error}}</li>
-                </ul>
-            </div>
+            <!--            <div class="alert alert-danger divAlert" role="alert" ng-show="ctrl.arrayErrors.length" ng-cloak>
+                            <ul class="listErrors">
+                                <li ng-repeat="error in ctrl.arrayErrors track by $index">{{error}}</li>
+                            </ul>
+                        </div>-->
             <div id="modal" class="modal fade" tabindex="-1" role="dialog">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
@@ -89,6 +104,6 @@ Frist proyect with html and framework Angularjs and bootstrap.
         <script src="js/libs/jquery/jquery.min.js"></script>
         <script src="js/libs/bootstrap/js/bootstrap.min.js"></script>
         <script src="js/libs/angular.js/angular.min.js"></script>
-        <script src="js/app/app.js"></script>
+        <script src="js/app/app1.js"></script>
     </body>
 </html>
