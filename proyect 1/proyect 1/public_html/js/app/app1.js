@@ -3,9 +3,9 @@ angular.module('notesApp', [])
 	.controller('MainCtrl', [function () {
 		var self = this;
 		var id = 3;
-		self.arrayErrors = [];
-		self.requestName = false;
-		self.requestSurname = false;
+		self.ErrorsAge = [];
+		self.ErrorsName = [];
+		self.ErrorsSurname = [];
 		// Plantilla de datos de persona
 		var personModel = {
 		    id: null,
@@ -30,10 +30,10 @@ angular.module('notesApp', [])
 
 		// Función para el submit del formulario
 		self.insert = function () {
-		    self.arrayErrors = validAge(self.person.age);
-		    self.requestName = validName(self.person.name);
-		    self.requestSurname = validSurname(self.person.surname);
-		    if ((!self.arrayErrors.length) && (self.requestName == false) && (self.requestSurname == false)) {
+		    self.ErrorsAge = validAge(self.person.age);
+		    self.ErrorsName = validName(self.person.name);
+		    self.ErrorsSurname = validSurname(self.person.surname);
+		    if (!self.ErrorsAge.length && !self.ErrorsName.length && !self.ErrorsSurname.length) {
 			// Añadir nueva id y la incrementamos
 			self.person.id = id++;
 
@@ -95,31 +95,31 @@ angular.module('notesApp', [])
 		};
 
 		function validName(name) {
-		    if (name === null) {
-			return true;
-		    } else {
-			return false;
+		    var ErrorsName = [];
+		    if (self.person.name === null) {
+			ErrorsName.push('The field name is required');
 		    }
+		    return ErrorsName;
 		}
 
 		function validSurname(surname) {
-		    if (surname === null) {
-			return true;
-		    } else {
-			return false;
+		    var ErrorsName = [];
+		    if (self.person.surname === null) {
+			ErrorsName.push('The field surname is required');
 		    }
+		    return ErrorsName;
 		}
 
 		function validAge(age) {
-		    var arrayErrors = [];
+		    var ErrorsAge = [];
 		    if (age <= 18) {
-			arrayErrors.push('The field age must be more tham 18 years');
+			ErrorsAge.push('The field age must be more tham 18 years');
 		    }
 
 		    if (!parseInt(age)) {
-			arrayErrors.push('The field age must be a number not a string');
+			ErrorsAge.push('The field age must be a number not a string');
 		    }
 
-		    return arrayErrors;
+		    return ErrorsAge;
 		}
 	    }]);
