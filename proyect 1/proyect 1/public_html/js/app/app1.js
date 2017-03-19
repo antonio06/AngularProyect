@@ -33,7 +33,7 @@ angular.module('notesApp', [])
 		    self.arrayErrors = validAge(self.person.age);
 		    self.requestName = validName(self.person.name);
 		    self.requestSurname = validSurname(self.person.surname);
-		    if ((!self.arrayErrors.length) && (self.requestName == false) && (self.requestSurname == false)) {
+		    if (!self.arrayErrors.length && !self.requestName && !self.requestSurname) {
 			// Añadir nueva id y la incrementamos
 			self.person.id = id++;
 
@@ -95,19 +95,11 @@ angular.module('notesApp', [])
 		};
 
 		function validName(name) {
-		    if (name === null) {
-			return true;
-		    } else {
-			return false;
-		    }
+			return name === null;
 		}
 
 		function validSurname(surname) {
-		    if (surname === null) {
-			return true;
-		    } else {
-			return false;
-		    }
+		    return surname === null;
 		}
 
 		function validAge(age) {
