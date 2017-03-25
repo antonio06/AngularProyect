@@ -42,9 +42,10 @@ angular.module('notesApp', [])
 
 		// Función para el submit del formulario
 		self.insert = function () {
-		    self.errorsAge = validAge(self.person.age);
 		    self.errorsName = validName(self.person.name);
 		    self.errorsSurname = validSurname(self.person.surname);
+		    self.errorsAge = validAge(self.person.age);
+
 		    if (!self.errorsAge.length && !self.errorsName.length && !self.errorsSurname.length) {
 			// Añadir nueva id y la incrementamos
 			self.person.id = id++;
@@ -56,6 +57,30 @@ angular.module('notesApp', [])
 			self.person = angular.copy(personModel);
 		    }
 		};
+
+		self.onKeyupName = function () {
+		    self.errorsName = validName(self.person.name);
+		};
+
+		self.onKeyupSurname = function () {
+		    self.errorsSurname = validSurname(self.person.surname);
+		}
+
+		self.onKeyupAge = function () {
+		    self.errorsAge = validAge(self.person.age);
+		}
+
+		self.onKeyupEditingName = function () {
+		    self.editingErrorsName = validName(self.editingPerson.name);
+		};
+
+		self.onKeyupEditingSurname = function () {
+		    self.editingErrorsSurname = validSurname(self.editingPerson.surname);
+		}
+
+		self.onKeyupEditingAge = function () {
+		    self.editingErrorsAge = validAge(self.editingPerson.age);
+		}
 
 		function getPreparedPerson(person) {
 		    person.age = parseInt(person.age);
@@ -83,6 +108,8 @@ angular.module('notesApp', [])
 			self.editingPerson = angular.copy(personModel);
 			modal.modal('hide');
 		    }
+
+
 		};
 
 		// Función para cargar los datos de una persona cuando se le de al botón Edit

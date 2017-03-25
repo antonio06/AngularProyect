@@ -3,7 +3,8 @@ angular.module('notesApp', [])
 	.controller('MainCtrl', [function () {
 		var self = this;
 		var id = 3;
-		self.arrayErrors = [];
+		self.personErrors = [];
+		self.editingPersonErrors = [];
 		// Plantilla de datos de persona
 		var personModel = {
 		    id: null,
@@ -24,12 +25,18 @@ angular.module('notesApp', [])
 		self.editingPerson = angular.copy(personModel);
 		self.personName = null;
 
+		var modal = $('#modal');
+
+		modal.on('hide.bs.modal', function () {
+		    self.editingPersonErrors = [];
+		});
+
 		// Función privada para inicializar el modelo que será utilizado para guardar los datos del formulario
 
 		// Función para el submit del formulario
 		self.insert = function () {
-		    self.arrayErrors = validateForm(self.person);
-		    if (!self.arrayErrors.length) {
+		    self.personErrors = validateForm(self.person);
+		    if (!self.personErrors.length) {
 			// Añadir nueva id y la incrementamos
 			self.person.id = id++;
 
@@ -48,24 +55,26 @@ angular.module('notesApp', [])
 		}
 
 		self.update = function () {
-
-		    // Buscar la posición de la persona que está siendo editada
-		    var index;
-		    for (var a = 0; a < self.people.length; a++) {
-			if (self.editingPerson.id === self.people[a].id) {
-			    index = a;
+		    self.editingPersonErrors = validateForm(self.editingPerson);
+		    if (!self.editingPersonErrors.length) {
+			// Buscar la posición de la persona que está siendo editada
+			var index;
+			for (var a = 0; a < self.people.length; a++) {
+			    if (self.editingPerson.id === self.people[a].id) {
+				index = a;
+			    }
 			}
+
+			// IMPORTANTE: Preparar el objeto de editingPerson para ser actualizado en el array people
+			var person = getPreparedPerson(self.editingPerson);
+
+			// Sustituir en el array la persona editada con los nuevos datos de editingPerson
+			self.people.splice(index, 1, person);
+
+			// limpiar el modelo editingPerson
+			self.editingPerson = angular.copy(personModel);
+			modal.modal('hide');
 		    }
-
-		    // IMPORTANTE: Preparar el objeto de editingPerson para ser actualizado en el array people
-		    var person = getPreparedPerson(self.editingPerson);
-
-		    // Sustituir en el array la persona editada con los nuevos datos de editingPerson
-		    self.people.splice(index, 1, person);
-
-		    // limpiar el modelo editingPerson
-		    self.editingPerson = angular.copy(personModel);
-		    $('#modal').modal('hide');
 		};
 
 		// Función para cargar los datos de una persona cuando se le de al botón Edit
@@ -83,7 +92,7 @@ angular.module('notesApp', [])
 		    self.editingPerson = angular.copy(person);
 		    self.personName = self.editingPerson.name;
 
-		    $('#modal').modal('show');
+		    modal.modal('show');
 		};
 
 		// Función para borrar una persona pasándo su id como parámetro.
@@ -93,21 +102,23 @@ angular.module('notesApp', [])
 
 		function validateForm(person) {
 		    var arrayErrors = [];
-		    if (self.person.name === null) {
+		    if (person.name === null || person.name === '') {
 			arrayErrors.push('The field name is required');
 		    }
 
-		    if (self.person.surname === null) {
+		    if (person.surname === null || person.surname === '') {
 			arrayErrors.push('The field surname is required');
 		    }
 
-		    if (self.person.age <= 18) {
-			arrayErrors.push('The field age must be more tham 18 years');
+		    if (!parseInt(person.age)) {
+			arrayErrors.push('The field age must be a number not a string');
 		    }
 
-		    if (!parseInt(self.person.age)) {
-			arrayErrors.push('The field age must be a number not a string');
+		    if (person.age <= 18) {
+			arrayErrors.push('The field age must be more tham 18 years');
 		    }
 		    return arrayErrors;
 		}
+
+
 	    }]);
